@@ -151,6 +151,10 @@
 #   Valid values are 256, 512, 1024
 #   Defaults to $::os_service_default
 #
+# [*file_backed_memory*]
+#   (optional) Available capacity in MiB for file-backed memory.
+#   Defaults to $::os_service_default
+#
 class nova::compute::libvirt (
   $ensure_package                             = 'present',
   $libvirt_virt_type                          = 'kvm',
@@ -180,6 +184,7 @@ class nova::compute::libvirt (
   $volume_use_multipath                       = $::os_service_default,
   $rx_queue_size                              = $::os_service_default,
   $tx_queue_size                              = $::os_service_default,
+  $file_backed_memory                         = undef,
 ) inherits nova::params {
 
   include ::nova::deps
@@ -262,6 +267,7 @@ class nova::compute::libvirt (
     'libvirt/volume_use_multipath':  value => $volume_use_multipath;
     'libvirt/rx_queue_size':         value => $rx_queue_size;
     'libvirt/tx_queue_size':         value => $tx_queue_size;
+    'libvirt/file_backed_memory':    value => $file_backed_memory;
   }
 
   # cpu_model param is only valid if cpu_mode=custom
